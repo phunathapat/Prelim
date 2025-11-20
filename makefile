@@ -1,7 +1,7 @@
 DEPS = test
 compile : main.cpp
 	clear 
-	g++ main.cpp -o $(DEPS)
+	g++ main.cpp WasteBin.cpp -o $(DEPS)
 	
 run : $(DEPS)
 	./$(DEPS)
