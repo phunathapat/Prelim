@@ -1,4 +1,4 @@
-//runcode = make run
+//runcode = make compile run
 
 
 #include "WasteBin.h"
