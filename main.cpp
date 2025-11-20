@@ -1,69 +1,57 @@
-//runcode = make compile run
-
-
 #include "WasteBin.h"
 #include <iostream>
-#include <limits> // Required for clearing input buffer
+#include <limits>
 
 using namespace std;
 
 int main() {
     WasteBinList myBin;
-    
-    string inputName;
-    string inputType;
+    string inputName, inputType;
     double inputWeight;
-    string continueChoice;
 
     cout << "=============================================" << endl;
-    cout << "   MUIC GREEN WASTE SYSTEM - DATA ENTRY" << endl;
+    cout << "   MUIC GREEN WASTE SYSTEM - SMART BIN" << endl;
     cout << "=============================================" << endl;
 
     while (true) {
-        // 1. Input Item Name (Using getline to allow spaces, e.g., "Amazon Cafe Cup")
+        // 1. รับชื่อ
         cout << "\n> Enter Item Name (or type 'exit' to finish): ";
         getline(cin, inputName);
+        if (inputName == "exit" || inputName == "Exit") break;
 
-        // Check exit condition
-        if (inputName == "exit" || inputName == "Exit") {
-            break;
+        // 2. รับประเภท (พร้อมระบบป้องกันการพิมพ์ผิด)
+        while (true) {
+            cout << "> Enter Waste Type (Recyclable, Organic, General, Hazardous): ";
+            cin >> inputType;
+
+            // เช็คคำสะกด (ต้องเป๊ะตามนี้)
+            if (inputType == "Recyclable" || inputType == "Organic" || 
+                inputType == "General" || inputType == "Hazardous") {
+                break; // ถ้าถูก ให้ออกจาก Loop ถามประเภท ไปถามน้ำหนักต่อ
+            } else {
+                cout << "   [Error] Invalid Type! Please enter only allowed types.\n";
+            }
         }
 
-        // 2. Input Waste Type
-        cout << "> Enter Waste Type (General/Recyclable/Organic/Hazardous): ";
-        cin >> inputType;
-
-        // 3. Input Weight
+        // 3. รับน้ำหนัก
         cout << "> Enter Weight (kg): ";
-        cin >> inputWeight;
+        while (!(cin >> inputWeight)) { // กันคนใส่น้ำหนักเป็นตัวหนังสือ
+            cout << "   [Error] Invalid Number! Enter Weight (kg): ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
 
-        // --- CRITICAL STEP ---
-        // cin leaves a 'newline' character in the buffer. 
-        // We must clear it, otherwise the next 'getline' will skip automatically.
+        // เคลียร์ buffer
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
 
-        // 4. Add to Linked List
+        // 4. ใส่ลงถัง (มันจะจัดคิวให้เองในฟังก์ชันนี้)
         myBin.throwTrash(inputName, inputType, inputWeight);
-        cout << "   [+] Item added successfully!" << endl;
+        cout << "   [+] Item added and sorted into queue!" << endl;
     }
 
-    // Show the Summary Table
-    cout << "\n\nGenerating Report..." << endl;
+    // แสดงผล
     myBin.showStats();
     myBin.inspectBin();
 
-    // Interactive Separation
-    cout << "Would you like to filter by waste type? (y/n): ";
-    char filterChoice;
-    cin >> filterChoice;
-
-    if (filterChoice == 'y' || filterChoice == 'Y') {
-        cout << "Enter type to search (e.g., Recyclable): ";
-        string searchType;
-        cin >> searchType;
-        myBin.separateWaste(searchType);
-    }
-
-    cout << "Program Finished." << endl;
     return 0;
 }

@@ -4,12 +4,8 @@
 #include <string>
 #include <iostream>
 
-// Using std:: explicitly in header files is good practice
 using namespace std;
 
-// ==========================================
-// Class Node: TrashItem
-// ==========================================
 class TrashItem {
 public:
     string itemName;
@@ -17,35 +13,29 @@ public:
     double weightKg;
     TrashItem* next;
 
-    // Constructor
     TrashItem(string name, string type, double w);
-    
-    // Destructor
     ~TrashItem();
 };
 
-// ==========================================
-// Class Linked List: WasteBinList
-// ==========================================
 class WasteBinList {
 private:
     TrashItem* head;
-    int itemCount;       // To track how many items are in the bin
-    double totalWeight;  // To track total weight
+    int itemCount;
+    double totalWeight;
+
+    // Helper: แปลงประเภทขยะเป็นตัวเลขเพื่อจัดลำดับ
+    // 1=Recyclable, 2=Organic, 3=General, 4=Hazardous
+    int getPriority(string type);
 
 public:
-    // Constructor
     WasteBinList();
-
-    // Destructor
     ~WasteBinList();
 
-    // Core Functions
+    // แก้ไข: ฟังก์ชันนี้จะแทรกตามลำดับความสำคัญทันที
     void throwTrash(string name, string type, double weight);
+    
     void inspectBin();
     void separateWaste(string targetType);
-    
-    // New Function: Shows the summary table
     void showStats();
 };
 
