@@ -74,14 +74,14 @@ public:
 
         WasteNode* current = head;
         int count = 0;
-        double totalWeight = 0.0; // ตัวแปรเก็บผลรวมน้ำหนัก
+        double totalWeight = 0.0; 
 
         cout << left << setw(5) << "No." << setw(20) << "Name" << setw(10) << "Weight" << endl;
         cout << "----------------------------------------" << endl;
         
         while (current != nullptr) {
             count++;
-            totalWeight += current->getWeight(); // บวกน้ำหนักสะสม
+            totalWeight += current->getWeight(); 
 
             cout << left << setw(5) << count
                  << setw(20) << current->getName() 
@@ -90,7 +90,6 @@ public:
             current = current->next;
         }
         cout << "----------------------------------------" << endl;
-        // สรุปยอดท้ายตาราง
         cout << ">> Total Items : " << count << " items" << endl;
         cout << ">> Total Weight: " << totalWeight << " kg" << endl;
         cout << "========================================" << endl;

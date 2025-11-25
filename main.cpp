@@ -1,5 +1,5 @@
 #include <iostream>
-#include "RecycleSystem.h" // <--- สำคัญมาก: เชื่อมไฟล์หลักเข้ากับระบบ
+#include "RecycleSystem.h" 
 
 using namespace std;
 

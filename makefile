@@ -1,4 +1,4 @@
-DEPS = test
+DEPS = mmabelzz
 
 compile : main.cpp
 	clear 
